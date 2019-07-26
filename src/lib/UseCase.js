@@ -1,3 +1,4 @@
+
 function makeIdFromList(list, symbol) {
   let unique = false;
   let newId = "";

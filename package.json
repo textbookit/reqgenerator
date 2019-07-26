@@ -20,12 +20,21 @@
     "autoprefixer": "^9.6.1",
     "compression": "^1.7.4",
     "express": "^4.17.1",
+    "json-decorator": "^1.0.0",
     "next": "^8.1.0",
     "next-workbox-webpack-plugin": "^1.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
     "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "babel": "^6.23.0"
   },
   "peerDependencies": {
     "webpack": "^4.36.1"
