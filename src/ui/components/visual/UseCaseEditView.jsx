@@ -176,8 +176,8 @@ class UseCaseEditView extends Component {
       updateUseCase(
         id,
         title,
+        category,
         description,
-        cateogry,
         requirements,
         inputs,
         outputs
@@ -217,6 +217,15 @@ class UseCaseEditView extends Component {
             name="title"
             onChange={event => this.setState({ title: event.target.value })}
             value={title}
+          />
+        </label>
+        <label>
+          <h4>Category</h4>{" "}
+          <input
+            type="text"
+            name="category"
+            onChange={event => this.setState({ category: event.target.value })}
+            value={category}
           />
         </label>
         <label>

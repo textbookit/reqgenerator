@@ -28,16 +28,5 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerRoute(
-  "/",
-  workbox.strategies.networkFirst({ cacheName: "html-cache", plugins: [] }),
-  "GET"
-);
-workbox.routing.registerRoute(
-  /.*\.(?:png|jpg|jpeg|svg|gif)/,
-  workbox.strategies.cacheFirst({
-    cacheName: "image-cache",
-    plugins: [new workbox.cacheableResponse.Plugin({ statuses: [0, 200] })]
-  }),
-  "GET"
-);
+workbox.routing.registerRoute("/", workbox.strategies.networkFirst({ "cacheName":"html-cache", plugins: [] }), 'GET');
+workbox.routing.registerRoute(/.*\.(?:png|jpg|jpeg|svg|gif)/, workbox.strategies.cacheFirst({ "cacheName":"image-cache", plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]})] }), 'GET');
