@@ -243,12 +243,11 @@ export default class UseCase {
     } else if (useCase.id == this.id) {
       return 2;
     } else if (
-      useCase.description != this.description &&
-      useCase.title != this.title
+      useCase.description != this.description ||
+      useCase.title != this.title ||
+      useCase.category != this.category
     ) {
       return 1;
-    } else if ( useCase.category != this.category) {
-        return 3;
     } else {
       return 0;
     }
@@ -284,9 +283,13 @@ export default class UseCase {
       (output, i) => (outputsMd += `${i + 1}. ${output.toMarkDown()}\n`)
     );
 
-    let useCaseMd = `${markdown}\n------\n#### Description\n${
+    let useCaseMd = `${markdown}\n------\n#### Category\n${
+      this.category
+    }\n#### Description\n${
       this.description
-    }\n#### Requirements\n${requirementsMd.toString()}\n#### Parameters\n##### Inputs\n${
+    }\n#### Requirements\n${
+      requirementsMd.toString()
+    }\n#### Parameters\n##### Inputs\n${
       inputsMd != "" ? inputsMd.toString() : "No Inputs\n"
     }\n##### Outputs\n${
       outputsMd != "" ? outputsMd.toString() : "No Outputs\n"
