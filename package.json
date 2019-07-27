@@ -27,8 +27,7 @@
     "react-redux": "^7.1.0",
     "redux": "^4.0.1"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "webpack": "^4.36.1"
   }

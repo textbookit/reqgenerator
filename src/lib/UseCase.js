@@ -1,4 +1,3 @@
-
 function makeIdFromList(list, symbol) {
   let unique = false;
   let newId = "";
@@ -288,9 +287,7 @@ export default class UseCase {
       this.category
     }\n#### Description\n${
       this.description
-    }\n#### Requirements\n${
-      requirementsMd.toString()
-    }\n#### Parameters\n##### Inputs\n${
+    }\n#### Requirements\n${requirementsMd.toString()}\n#### Parameters\n##### Inputs\n${
       inputsMd != "" ? inputsMd.toString() : "No Inputs\n"
     }\n##### Outputs\n${
       outputsMd != "" ? outputsMd.toString() : "No Outputs\n"

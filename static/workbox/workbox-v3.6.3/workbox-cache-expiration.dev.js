@@ -1,9 +1,17 @@
 this.workbox = this.workbox || {};
-this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,assert_mjs,logger_mjs,cacheNames_mjs,index_mjs) {
-  'use strict';
+this.workbox.expiration = (function(
+  exports,
+  DBWrapper_mjs,
+  WorkboxError_mjs,
+  assert_mjs,
+  logger_mjs,
+  cacheNames_mjs,
+  index_mjs
+) {
+  "use strict";
 
   try {
-    self.workbox.v['workbox:cache-expiration:3.6.3'] = 1;
+    self.workbox.v["workbox:cache-expiration:3.6.3"] = 1;
   } catch (e) {} // eslint-disable-line
 
   /*
@@ -22,8 +30,8 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     limitations under the License.
   */
 
-  const URL_KEY = 'url';
-  const TIMESTAMP_KEY = 'timestamp';
+  const URL_KEY = "url";
+  const TIMESTAMP_KEY = "timestamp";
 
   /**
    * Returns the timestamp model.
@@ -59,12 +67,16 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
       const db = evt.target.result;
       if (evt.oldVersion < 2) {
         // Remove old databases.
-        if (db.objectStoreNames.contains('workbox-cache-expiration')) {
-          db.deleteObjectStore('workbox-cache-expiration');
+        if (db.objectStoreNames.contains("workbox-cache-expiration")) {
+          db.deleteObjectStore("workbox-cache-expiration");
         }
       }
 
-      db.createObjectStore(this._storeName, { keyPath: URL_KEY }).createIndex(TIMESTAMP_KEY, TIMESTAMP_KEY, { unique: false });
+      db.createObjectStore(this._storeName, { keyPath: URL_KEY }).createIndex(
+        TIMESTAMP_KEY,
+        TIMESTAMP_KEY,
+        { unique: false }
+      );
     }
 
     /**
@@ -76,7 +88,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     setTimestamp(url, timestamp) {
       var _this = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         yield _this._db.put(_this._storeName, {
           [URL_KEY]: new URL(url, location).href,
           [TIMESTAMP_KEY]: timestamp
@@ -94,7 +106,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     getAllTimestamps() {
       var _this2 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         return yield _this2._db.getAllMatching(_this2._storeName, {
           index: TIMESTAMP_KEY
         });
@@ -112,7 +124,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     getTimestamp(url) {
       var _this3 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         const timestampObject = yield _this3._db.get(_this3._storeName, url);
         return timestampObject.timestamp;
       })();
@@ -126,7 +138,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     deleteUrl(url) {
       var _this4 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         yield _this4._db.delete(_this4._storeName, new URL(url, location).href);
       })();
     }
@@ -137,7 +149,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     delete() {
       var _this5 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         yield _this5._db.deleteDatabase();
         _this5._db = null;
       })();
@@ -181,38 +193,41 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
      */
     constructor(cacheName, config = {}) {
       {
-        assert_mjs.assert.isType(cacheName, 'string', {
-          moduleName: 'workbox-cache-expiration',
-          className: 'CacheExpiration',
-          funcName: 'constructor',
-          paramName: 'cacheName'
+        assert_mjs.assert.isType(cacheName, "string", {
+          moduleName: "workbox-cache-expiration",
+          className: "CacheExpiration",
+          funcName: "constructor",
+          paramName: "cacheName"
         });
 
         if (!(config.maxEntries || config.maxAgeSeconds)) {
-          throw new WorkboxError_mjs.WorkboxError('max-entries-or-age-required', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'CacheExpiration',
-            funcName: 'constructor'
-          });
+          throw new WorkboxError_mjs.WorkboxError(
+            "max-entries-or-age-required",
+            {
+              moduleName: "workbox-cache-expiration",
+              className: "CacheExpiration",
+              funcName: "constructor"
+            }
+          );
         }
 
         if (config.maxEntries) {
-          assert_mjs.assert.isType(config.maxEntries, 'number', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'CacheExpiration',
-            funcName: 'constructor',
-            paramName: 'config.maxEntries'
+          assert_mjs.assert.isType(config.maxEntries, "number", {
+            moduleName: "workbox-cache-expiration",
+            className: "CacheExpiration",
+            funcName: "constructor",
+            paramName: "config.maxEntries"
           });
 
           // TODO: Assert is positive
         }
 
         if (config.maxAgeSeconds) {
-          assert_mjs.assert.isType(config.maxAgeSeconds, 'number', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'CacheExpiration',
-            funcName: 'constructor',
-            paramName: 'config.maxAgeSeconds'
+          assert_mjs.assert.isType(config.maxAgeSeconds, "number", {
+            moduleName: "workbox-cache-expiration",
+            className: "CacheExpiration",
+            funcName: "constructor",
+            paramName: "config.maxAgeSeconds"
           });
 
           // TODO: Assert is positive
@@ -233,7 +248,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     expireEntries() {
       var _this = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         if (_this._isRunning) {
           _this._rerunRequested = true;
           return;
@@ -252,19 +267,31 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
         // convert back into an array.
         const allUrls = [...new Set(oldEntries.concat(extraEntries))];
 
-        yield Promise.all([_this._deleteFromCache(allUrls), _this._deleteFromIDB(allUrls)]);
+        yield Promise.all([
+          _this._deleteFromCache(allUrls),
+          _this._deleteFromIDB(allUrls)
+        ]);
 
         {
           // TODO: break apart entries deleted due to expiration vs size restraints
           if (allUrls.length > 0) {
-            logger_mjs.logger.groupCollapsed(`Expired ${allUrls.length} ` + `${allUrls.length === 1 ? 'entry' : 'entries'} and removed ` + `${allUrls.length === 1 ? 'it' : 'them'} from the ` + `'${_this._cacheName}' cache.`);
-            logger_mjs.logger.log(`Expired the following ${allUrls.length === 1 ? 'URL' : 'URLs'}:`);
-            allUrls.forEach(function (url) {
+            logger_mjs.logger.groupCollapsed(
+              `Expired ${allUrls.length} ` +
+                `${allUrls.length === 1 ? "entry" : "entries"} and removed ` +
+                `${allUrls.length === 1 ? "it" : "them"} from the ` +
+                `'${_this._cacheName}' cache.`
+            );
+            logger_mjs.logger.log(
+              `Expired the following ${allUrls.length === 1 ? "URL" : "URLs"}:`
+            );
+            allUrls.forEach(function(url) {
               return logger_mjs.logger.log(`    ${url}`);
             });
             logger_mjs.logger.groupEnd();
           } else {
-            logger_mjs.logger.debug(`Cache expiration ran and found no entries to remove.`);
+            logger_mjs.logger.debug(
+              `Cache expiration ran and found no entries to remove.`
+            );
           }
         }
 
@@ -287,13 +314,13 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     _findOldEntries(expireFromTimestamp) {
       var _this2 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         {
-          assert_mjs.assert.isType(expireFromTimestamp, 'number', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'CacheExpiration',
-            funcName: '_findOldEntries',
-            paramName: 'expireFromTimestamp'
+          assert_mjs.assert.isType(expireFromTimestamp, "number", {
+            moduleName: "workbox-cache-expiration",
+            className: "CacheExpiration",
+            funcName: "_findOldEntries",
+            paramName: "expireFromTimestamp"
           });
         }
 
@@ -301,10 +328,11 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
           return [];
         }
 
-        const expireOlderThan = expireFromTimestamp - _this2._maxAgeSeconds * 1000;
+        const expireOlderThan =
+          expireFromTimestamp - _this2._maxAgeSeconds * 1000;
         const timestamps = yield _this2._timestampModel.getAllTimestamps();
         const expiredUrls = [];
-        timestamps.forEach(function (timestampDetails) {
+        timestamps.forEach(function(timestampDetails) {
           if (timestampDetails.timestamp < expireOlderThan) {
             expiredUrls.push(timestampDetails.url);
           }
@@ -322,7 +350,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     _findExtraEntries() {
       var _this3 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         const extraUrls = [];
 
         if (!_this3._maxEntries) {
@@ -347,7 +375,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     _deleteFromCache(urls) {
       var _this4 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         const cache = yield caches.open(_this4._cacheName);
         for (const url of urls) {
           yield cache.delete(url);
@@ -363,7 +391,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     _deleteFromIDB(urls) {
       var _this5 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         for (const url of urls) {
           yield _this5._timestampModel.deleteUrl(url);
         }
@@ -380,18 +408,18 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     updateTimestamp(url) {
       var _this6 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         {
-          assert_mjs.assert.isType(url, 'string', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'CacheExpiration',
-            funcName: 'updateTimestamp',
-            paramName: 'url'
+          assert_mjs.assert.isType(url, "string", {
+            moduleName: "workbox-cache-expiration",
+            className: "CacheExpiration",
+            funcName: "updateTimestamp",
+            paramName: "url"
           });
         }
 
         const urlObject = new URL(url, location);
-        urlObject.hash = '';
+        urlObject.hash = "";
 
         yield _this6._timestampModel.setTimestamp(urlObject.href, Date.now());
       })();
@@ -411,17 +439,22 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     isURLExpired(url) {
       var _this7 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         if (!_this7._maxAgeSeconds) {
-          throw new WorkboxError_mjs.WorkboxError(`expired-test-without-max-age`, {
-            methodName: 'isURLExpired',
-            paramName: 'maxAgeSeconds'
-          });
+          throw new WorkboxError_mjs.WorkboxError(
+            `expired-test-without-max-age`,
+            {
+              methodName: "isURLExpired",
+              paramName: "maxAgeSeconds"
+            }
+          );
         }
         const urlObject = new URL(url, location);
-        urlObject.hash = '';
+        urlObject.hash = "";
 
-        const timestamp = yield _this7._timestampModel.getTimestamp(urlObject.href);
+        const timestamp = yield _this7._timestampModel.getTimestamp(
+          urlObject.href
+        );
         const expireOlderThan = Date.now() - _this7._maxAgeSeconds * 1000;
         return timestamp < expireOlderThan;
       })();
@@ -434,7 +467,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     delete() {
       var _this8 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         // Make sure we don't attempt another rerun if we're called in the middle of
         // a cache expiration.
         _this8._rerunRequested = false;
@@ -487,28 +520,31 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     constructor(config = {}) {
       {
         if (!(config.maxEntries || config.maxAgeSeconds)) {
-          throw new WorkboxError_mjs.WorkboxError('max-entries-or-age-required', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'Plugin',
-            funcName: 'constructor'
-          });
+          throw new WorkboxError_mjs.WorkboxError(
+            "max-entries-or-age-required",
+            {
+              moduleName: "workbox-cache-expiration",
+              className: "Plugin",
+              funcName: "constructor"
+            }
+          );
         }
 
         if (config.maxEntries) {
-          assert_mjs.assert.isType(config.maxEntries, 'number', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'Plugin',
-            funcName: 'constructor',
-            paramName: 'config.maxEntries'
+          assert_mjs.assert.isType(config.maxEntries, "number", {
+            moduleName: "workbox-cache-expiration",
+            className: "Plugin",
+            funcName: "constructor",
+            paramName: "config.maxEntries"
           });
         }
 
         if (config.maxAgeSeconds) {
-          assert_mjs.assert.isType(config.maxAgeSeconds, 'number', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'Plugin',
-            funcName: 'constructor',
-            paramName: 'config.maxAgeSeconds'
+          assert_mjs.assert.isType(config.maxAgeSeconds, "number", {
+            moduleName: "workbox-cache-expiration",
+            className: "Plugin",
+            funcName: "constructor",
+            paramName: "config.maxAgeSeconds"
           });
         }
       }
@@ -518,7 +554,9 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
       this._cacheExpirations = new Map();
 
       if (config.purgeOnQuotaError) {
-        index_mjs.registerQuotaErrorCallback(() => this.deleteCacheAndMetadata());
+        index_mjs.registerQuotaErrorCallback(() =>
+          this.deleteCacheAndMetadata()
+        );
       }
     }
 
@@ -533,7 +571,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
      */
     _getCacheExpiration(cacheName) {
       if (cacheName === cacheNames_mjs.cacheNames.getRuntimeName()) {
-        throw new WorkboxError_mjs.WorkboxError('expire-custom-caches-only');
+        throw new WorkboxError_mjs.WorkboxError("expire-custom-caches-only");
       }
 
       let cacheExpiration = this._cacheExpirations.get(cacheName);
@@ -613,11 +651,11 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
      * @private
      */
     _getDateHeaderTimestamp(cachedResponse) {
-      if (!cachedResponse.headers.has('date')) {
+      if (!cachedResponse.headers.has("date")) {
         return null;
       }
 
-      const dateHeader = cachedResponse.headers.get('date');
+      const dateHeader = cachedResponse.headers.get("date");
       const parsedDate = new Date(dateHeader);
       const headerTime = parsedDate.getTime();
 
@@ -643,19 +681,19 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     cacheDidUpdate({ cacheName, request }) {
       var _this = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         {
-          assert_mjs.assert.isType(cacheName, 'string', {
-            moduleName: 'workbox-cache-expiration',
-            className: 'Plugin',
-            funcName: 'cacheDidUpdate',
-            paramName: 'cacheName'
+          assert_mjs.assert.isType(cacheName, "string", {
+            moduleName: "workbox-cache-expiration",
+            className: "Plugin",
+            funcName: "cacheDidUpdate",
+            paramName: "cacheName"
           });
           assert_mjs.assert.isInstance(request, Request, {
-            moduleName: 'workbox-cache-expiration',
-            className: 'Plugin',
-            funcName: 'cacheDidUpdate',
-            paramName: 'request'
+            moduleName: "workbox-cache-expiration",
+            className: "Plugin",
+            funcName: "cacheDidUpdate",
+            paramName: "request"
           });
         }
 
@@ -684,7 +722,7 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
     deleteCacheAndMetadata() {
       var _this2 = this;
 
-      return babelHelpers.asyncToGenerator(function* () {
+      return babelHelpers.asyncToGenerator(function*() {
         // Do this one at a time instead of all at once via `Promise.all()` to
         // reduce the chance of inconsistency if a promise rejects.
         for (const [cacheName, cacheExpiration] of _this2._cacheExpirations) {
@@ -734,7 +772,14 @@ this.workbox.expiration = (function (exports,DBWrapper_mjs,WorkboxError_mjs,asse
   exports.Plugin = Plugin;
 
   return exports;
-
-}({},workbox.core._private,workbox.core._private,workbox.core._private,workbox.core._private,workbox.core._private,workbox.core));
+})(
+  {},
+  workbox.core._private,
+  workbox.core._private,
+  workbox.core._private,
+  workbox.core._private,
+  workbox.core._private,
+  workbox.core
+);
 
 //# sourceMappingURL=workbox-cache-expiration.dev.js.map

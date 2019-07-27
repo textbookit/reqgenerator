@@ -1,7 +1,7 @@
-import {useCases} from './UseCasesModel';
+import { useCases } from "./UseCasesModel";
 
 const models = {
-    useCases: useCases
+  useCases: useCases
 };
 
 export default models;
